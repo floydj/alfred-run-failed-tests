@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.jason-floyd.run-failed-tests</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>3BA3F342-1642-4A25-A605-BAE12023108F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4B7E3D0B-93D2-4EE2-A497-56C8B17B0610</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4299BF5A-EA71-41C3-8785-BF14C04CAC9D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3BA3F342-1642-4A25-A605-BAE12023108F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4B7E3D0B-93D2-4EE2-A497-56C8B17B0610</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>548A6D65-551C-4DB0-A225-97B6CC09041A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>548A6D65-551C-4DB0-A225-97B6CC09041A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>18E145B2-A3D5-495F-88B6-37CC96BB7E7F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>F162164F-C26C-44F0-9C13-4AA8FBED56F9</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>8D1FE892-EBD9-453D-A568-16FE022D132C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>918404AD-77EC-42D8-AAD3-411C070F5C39</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CA0C0CC8-0EE4-40AB-8DCC-564631448892</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>AF41F91C-D281-4259-BEF0-3910331DF04B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>918404AD-77EC-42D8-AAD3-411C070F5C39</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Jason Floyd</string>
+	<key>description</key>
+	<string>Combine failed tests in iTerm2 into one command</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Combine failed rails test command</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>No failed tests found</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>18E145B2-A3D5-495F-88B6-37CC96BB7E7F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>lines = ARGV[0].split("\n").map(&amp;:strip)
+final = []
+last_failed = lines.rindex("Failed tests:")
+
+if last_failed &lt; 0
+  puts "NOTESTFOUND"
+  return
+end
+# puts "-----" + last_failed.to_s + "-----"
+
+lines[last_failed..-1].each do |ln|
+  if ln.match?(/^rails test test\//)
+    final.append(ln.gsub("rails test ", ""))
+  end
+end
+
+puts "bin/rails test #{final.join(' ')} -vd"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>2</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>4B7E3D0B-93D2-4EE2-A497-56C8B17B0610</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>on run argv
+ tell application "iTerm"
+   tell current session of current window
+     set txt to contents
+   end tell
+ end tell
+end run</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>3BA3F342-1642-4A25-A605-BAE12023108F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>combinerailstests</string>
+				<key>subtext</key>
+				<string>from iTerm2 automatically</string>
+				<key>text</key>
+				<string>Run Failed Tests</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>4299BF5A-EA71-41C3-8785-BF14C04CAC9D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>NOTESTFOUND</string>
+						<key>outputlabel</key>
+						<string>No tests found</string>
+						<key>uid</key>
+						<string>F162164F-C26C-44F0-9C13-4AA8FBED56F9</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>else</string>
+				<key>hideelse</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>548A6D65-551C-4DB0-A225-97B6CC09041A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>on run argv
+  tell application "iTerm2"
+    tell current session of current window
+        write text "{query}"
+    end tell
+  end tell
+end run</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>8D1FE892-EBD9-453D-A568-16FE022D132C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>on run argv
+  tell application "iTerm2"
+    tell current session of current window
+      write text "{query}" newline NO
+    end tell
+  end tell 
+end run</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>CA0C0CC8-0EE4-40AB-8DCC-564631448892</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>testfromclipboard</string>
+				<key>subtext</key>
+				<string>from clipboard</string>
+				<key>text</key>
+				<string>Run Failed Tests</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>AF41F91C-D281-4259-BEF0-3910331DF04B</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query = ARGV[0]
+
+pasted_lines = `pbpaste`
+lines = pasted_lines.gsub('rails test', '')
+lines = lines.delete("\r").split("\n")
+lines.unshift 'DISABLE_SPRING=1 PARALLEL_WORKERS=1 bin/rails test -d'
+puts lines.join
+# STDERR.puts lines</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>2</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>918404AD-77EC-42D8-AAD3-411C070F5C39</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>18E145B2-A3D5-495F-88B6-37CC96BB7E7F</key>
+		<dict>
+			<key>xpos</key>
+			<real>915</real>
+			<key>ypos</key>
+			<real>15</real>
+		</dict>
+		<key>3BA3F342-1642-4A25-A605-BAE12023108F</key>
+		<dict>
+			<key>xpos</key>
+			<real>295</real>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+		<key>4299BF5A-EA71-41C3-8785-BF14C04CAC9D</key>
+		<dict>
+			<key>xpos</key>
+			<real>40</real>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+		<key>4B7E3D0B-93D2-4EE2-A497-56C8B17B0610</key>
+		<dict>
+			<key>xpos</key>
+			<real>540</real>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+		<key>548A6D65-551C-4DB0-A225-97B6CC09041A</key>
+		<dict>
+			<key>xpos</key>
+			<real>705</real>
+			<key>ypos</key>
+			<real>80</real>
+		</dict>
+		<key>8D1FE892-EBD9-453D-A568-16FE022D132C</key>
+		<dict>
+			<key>xpos</key>
+			<real>915</real>
+			<key>ypos</key>
+			<real>150</real>
+		</dict>
+		<key>918404AD-77EC-42D8-AAD3-411C070F5C39</key>
+		<dict>
+			<key>note</key>
+			<string>Run tests with just one parallel worker</string>
+			<key>xpos</key>
+			<real>295</real>
+			<key>ypos</key>
+			<real>280</real>
+		</dict>
+		<key>AF41F91C-D281-4259-BEF0-3910331DF04B</key>
+		<dict>
+			<key>xpos</key>
+			<real>40</real>
+			<key>ypos</key>
+			<real>280</real>
+		</dict>
+		<key>CA0C0CC8-0EE4-40AB-8DCC-564631448892</key>
+		<dict>
+			<key>xpos</key>
+			<real>540</real>
+			<key>ypos</key>
+			<real>280</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>0.0.0.1</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
